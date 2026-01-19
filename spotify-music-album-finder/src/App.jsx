@@ -8,9 +8,6 @@ import {
   Row,
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import "@fontsource/poppins/400.css"; // normal
-import "@fontsource/poppins/600.css"; // semi-bold
-
 
 const clientId = import.meta.env.VITE_CLIENT_ID;
 const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
@@ -135,7 +132,7 @@ function App() {
                 />
 
                 <div className="card-overlay">
-                  <h3 style={{ fontFamily: "Poppins, sans-serif", fontWeight: "600", fontSize: "16px", marginBottom: "10px" }}>
+                  <h3 style={{ fontFamily: "montserrat, sans-serif", fontWeight: "600", fontSize: "16px", marginBottom: "10px" }}>
                     {album.name}
                   </h3>
                   <p style={{ fontSize: "13px", color: "#b3b3b3", marginBottom: "15px" }}>
@@ -144,7 +141,7 @@ function App() {
                   <Button
                     href={album.external_urls.spotify}
                     style={{
-                      fontFamily: "Poppins, sans-serif",
+                      fontFamily: "montserrat, sans-serif",
                       background: "linear-gradient(135deg, #1DB954 0%, #1ed760 100%)",
                       color: "black",
                       fontWeight: "bold",
