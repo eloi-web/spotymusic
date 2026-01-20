@@ -1,38 +1,30 @@
-  :root {
-  font-family: "'montserrat', serif";
+:root {
+  font-family: 'Montserrat', serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/*
-// <weight>: Use a value from 100 to 900
-// <uniquifier>: Use a unique and descriptive class name
- */
-.montserrat-<uniquifier> {
-  font-family: "'montserrat', sans-serif";
+
+.montserrat {
+  font-family: 'Montserrat', sans-serif;
   font-optical-sizing: auto;
-  font-weight: <weight>;
   font-style: normal;
 }
 
-
-/* instrument-serif-latin */
 .instrument-serif-regular {
-  font-family: "'Instrument Serif', serif";
+  font-family: 'Instrument Serif', serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .instrument-serif-regular-italic {
-  font-family: "'Instrument Serif', serif";
+  font-family: 'Instrument Serif', serif;
   font-weight: 400;
   font-style: italic;
 }
