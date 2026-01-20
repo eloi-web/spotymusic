@@ -152,7 +152,7 @@ function App() {
           <div className="text-center mb-8 sm:mb-10">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-5 px-4"
               style={{
-              fontFamily: 'Instrument Serif', serif,
+              fontFamily: "'Instrument Serif', serif",
               fontStyle: normal,
               fontDisplay: swap,
               fontWeight: 400,
