@@ -138,19 +138,64 @@ function App() {
       setIsLoading(false);
     }
   }
+
+const handleGoBack = () => {
+  setHasSearched(false);
+  setAlbums([]);
+  setSearchInput("");
+  setError("");
+  setBackgroundColor("#121212");
+};
   
   return (
-    <div 
-      className="min-h-screen pb-12 transition-all duration-700"
-      style={{
-        background: `linear-gradient(135deg, ${backgroundColor} 0%, #121212 100%)`
-      }}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
+    <div className="min-h-screen bg-black">
+      <div className="relative w-full min-h-screen flex items-center justify-center px-4 py-12">
+        <div className="absolute inset-0 bg-black" />
+
+         {/* Back Arrow - Only show after search */}
+        {hasSearched && (
+          <button
+            onClick={handleGoBack}
+            className="absolute top-6 left-6 z-20 w-12 h-12 rounded-full bg-black bg-opacity-70 hover:bg-opacity-90 flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-500"
+            aria-label="Go back to home"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="white" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+          </button>
+        )}
+
+        {/* Content Container with a gradient Image Box */}
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <div 
+            className="relative rounded-3xl overflow-hidden shadow-2xl"
+            style={{
+              border: '2px solid rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            <img 
+              src="/path-to-your-gradient-image.jpg" 
+              alt="Gradient background"
+              className="w-full h-auto"
+            />
+        
+      {/* Overlay Content on Image */}
+            <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center p-8 sm:p-12">
+              <div className="w-full max-w-3xl">
         {/* Onboarding Text */}
         {!hasSearched && (
           <div className="text-center mb-8 sm:mb-10">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-5 px-4"
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-5"
               style={{
               fontFamily: "'Instrument Serif', serif",
               fontStyle: "normal",
@@ -159,31 +204,31 @@ function App() {
               }}>
               Discover Your Favorite
               <span className="relative inline-block ml-2 sm:ml-3">
-                Albums
-                <svg
-                  className="absolute left-0 -bottom-1 sm:-bottom-2 w-full h-4 sm:h-5 pointer-events-none"
-                  viewBox="0 0 300 20"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M5,15 Q75,5 150,12 T295,10"
-                    stroke="#1DB954"
-                    strokeWidth="4"
-                    fill="none"
-                    strokeLinecap="round"
-                    style={{
-                      filter: "url(#roughen)"
-                    }}
-                  />
-                  <defs>
-                    <filter id="roughen">
-                      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="noise" />
-                      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
-                    </filter>
-                  </defs>
-                </svg>
-              </span>
+                    Albums
+                    <svg
+                      className="absolute left-0 -bottom-1 sm:-bottom-2 w-full h-4 sm:h-5 pointer-events-none"
+                      viewBox="0 0 300 20"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M5,15 Q75,5 150,12 T295,10"
+                        stroke="#1DB954"
+                        strokeWidth="4"
+                        fill="none"
+                        strokeLinecap="round"
+                        style={{
+                          filter: "url(#roughen)"
+                        }}
+                      />
+                      <defs>
+                        <filter id="roughen">
+                          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="noise" />
+                          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+                        </filter>
+                      </defs>
+                    </svg>
+                  </span>
             </h1>
             <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-4">
               Search for any artist and explore their complete discography powered by Spotify
@@ -192,11 +237,11 @@ function App() {
         )}
 
         {/* Search Bar */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-8 sm:mb-10 px-4">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
           <input
             type="text"
             placeholder="Search For an Artist or Album"
-            className="w-full sm:w-80 h-12 px-5 rounded-full text-black outline-none focus:ring-2 focus:ring-green-500 transition-shadow"
+            className="w-full sm:w-96 h-12 px-5 rounded-full text-black outline-none focus:ring-2 focus:ring-green-500 transition-shadow"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => {
@@ -217,6 +262,16 @@ function App() {
           </button>
         </div>
 
+       {/* Main Content Area */}
+      <div 
+        className="transition-all duration-700"
+        style={{
+          background: `linear-gradient(to bottom, ${backgroundColor}20 0%, #121212 100%)`
+        }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            
         {/* Error Message */}
         {error && (
           <div className="max-w-2xl mx-auto mb-8 px-4" role="alert">
@@ -333,7 +388,39 @@ function App() {
         )}
       </div>
     </div>
+            {/* Additional Content Section */}
+              <div className="max-w-5xl mx-auto mt-16">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-center">
+                    <div className="text-4xl mb-3">🎵</div>
+                    <h3 className="text-xl font-bold text-white mb-2">Discover More</h3>
+                    <p className="text-white text-sm opacity-90">
+                      Explore millions of songs and albums from artists around the world
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-center">
+                    <div className="text-4xl mb-3">📱</div>
+                    <h3 className="text-xl font-bold text-white mb-2">Listen Anywhere</h3>
+                    <p className="text-white text-sm opacity-90">
+                      Stream music on your phone, computer, or any connected device
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl p-6 text-center">
+                    <div className="text-4xl mb-3">💎</div>
+                    <h3 className="text-xl font-bold text-white mb-2">Premium Quality</h3>
+                    <p className="text-white text-sm opacity-90">
+                      Enjoy high-quality audio and an ad-free listening experience
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
-
 export default App;
