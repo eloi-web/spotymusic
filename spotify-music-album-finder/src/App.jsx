@@ -152,78 +152,72 @@ function App() {
       {!hasSearched ? (
         // SEARCH PAGE
         <div className="min-h-screen flex items-center justify-center px-4 py-12">
-          <div className="relative max-w-3xl w-full rounded-lg overflow-hidden shadow-2xl h-72 sm:h-80 md:h-96">
-            <img
-              src="/new.png"
-              alt="Hero gradient background"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: 'center' }}
-            />
-            {/* Overlay for readability */}
-            <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm" />
+          <div className="relative max-w-3xl w-full rounded-lg overflow-hidden shadow-2xl h-72 sm:h-80 md:h-96 bg-[#121212] flex items-center justify-center">
 
-            {/* Content */}
-            <div className="relative z-10 text-center p-8 sm:p-12">
+            {/* 1. Base Gradient Layer (Green edges, Black center) */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: `
+        radial-gradient(circle at center, transparent 0%, rgba(29, 185, 84, 0.4) 100%),
+        radial-gradient(circle at center, #121212 0%, #000 100%)
+      `
+              }}
+            />
+
+            {/* 2. AUTHENTIC NOISE LAYER (The "Mixer") */}
+            <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen">
+              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <filter id="spotifyNoise">
+                  {/* High frequency creates the 'sandpaper' grain look */}
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.80"
+                    numOctaves="4"
+                    stitchTiles="stitch"
+                  />
+                  {/* This makes the noise interact with the colors underneath */}
+                  <feColorMatrix type="saturate" values="0" />
+                </filter>
+                <rect width="100%" height="100%" filter="url(#spotifyNoise)" />
+              </svg>
+            </div>
+
+            {/* 3. Subtle Lighting Overlay for depth */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+
+            {/* Content (Remains identical to your logic) */}
+            <div className="relative z-10 text-center p-8 sm:p-12 w-full">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-5"
                 style={{
                   fontFamily: "'Instrument Serif', serif",
-                  fontStyle: "normal",
-                  fontDisplay: "swap",
                   fontWeight: '400',
                 }}>
                 Discover Your Favorite
                 <span className="relative inline-block ml-2 sm:ml-3">
                   Albums
-                  <svg
-                    className="absolute left-0 -bottom-1 sm:-bottom-2 w-full h-4 sm:h-5 pointer-events-none"
-                    viewBox="0 0 300 20"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M5,15 Q75,5 150,12 T295,10"
-                      stroke="#1DB954"
-                      strokeWidth="4"
-                      fill="none"
-                      strokeLinecap="round"
-                      style={{
-                        filter: "url(#roughen)"
-                      }}
-                    />
-                    <defs>
-                      <filter id="roughen">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" result="noise" />
-                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
-                      </filter>
-                    </defs>
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1283 132"><path d="M1282.46 5.79c-.91-3.88-5.18-6.65-9.04-5.54-104.37 29.02-193.78 56.87-361.6 74.53-268.41 28.16-539.6 14.6-803.08-26.38C94.9 47.97-.34 26.24.08 41.38c-1.56 14.21 19.47 12.91 29.6 17.24 32.82 8.6 66.1 15.33 99.4 21.81 238.99 44.43 482.98 55.29 725.63 49.01 92.37-4.11 185.68-9.96 275.51-33.09 18.68-6.31 42.79-9.21 55.18-25.89 6.76-13.28-12.41-21.16-13.83-6.12-17.69 11.67-39.31 15.61-59.45 21.34-114.56 25.18-245.31 30.46-361.99 30.36-191.39.45-383.13-10.13-572-42.21 277.31 36.42 560.77 44.96 837.82 2.23 104.21-15.4 195.11-42.74 260.97-61.22a7.57 7.57 0 0 0 5.54-9.05Z" fill="#01AC20"></path></svg>
                 </span>
               </h1>
+
               <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-12">
                 Search for any artist and explore their complete discography powered by Spotify
               </p>
 
-              {/* Search Bar */}
               <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-12">
                 <input
                   type="text"
                   placeholder="Search For an Artist or Album"
-                  className="w-full sm:w-96 h-12 px-5 rounded-full text-black outline-none focus:ring-2 focus:ring-green-500 transition-shadow"
+                  className="w-full sm:w-96 h-12 px-5 rounded-full text-white bg-white/10 border border-white/20 backdrop-blur-md outline-none focus:ring-2 focus:ring-green-500 transition-all placeholder:text-gray-500"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      search();
-                    }
-                  }}
+                  onKeyDown={(e) => e.key === "Enter" && search()}
                   disabled={isLoading || authError}
-                  aria-label="Search for an artist or album"
                 />
                 <button
                   onClick={search}
                   disabled={isLoading || authError}
-                  className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-black font-semibold px-8 py-3 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  aria-label={isLoading ? "Searching for artist" : "Search"}
+                  className="w-full sm:w-auto bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold px-8 py-3 rounded-full transition-transform active:scale-95 disabled:opacity-50"
                 >
                   {isLoading ? "Searching..." : "Search"}
                 </button>
@@ -267,25 +261,26 @@ function App() {
                   </div>
                   <span className="sr-only">Loading albums...</span>
                   <style>{`
-                    @keyframes bubble {
-                      0%, 80%, 100% {
-                        transform: scale(0);
-                        opacity: 0.5;
-                      }
-                      40% {
-                        transform: scale(1);
-                        opacity: 1;
-                      }
-                    }
-                  `}</style>
+          @keyframes bubble {
+            0%, 80%, 100% {
+              transform: scale(0);
+              opacity: 0.5;
+            }
+            40% {
+              transform: scale(1);
+              opacity: 1;
+            }
+          }
+        `}</style>
                 </div>
               )}
             </div>
           </div>
+
         </div>
       ) : (
         // RESULTS PAGE
-        <div 
+        <div
           className="min-h-screen pt-20 pb-12 transition-all duration-700"
           style={{
             background: `linear-gradient(to bottom, ${backgroundColor}50 0%, #12121233 100%)`
@@ -297,8 +292,8 @@ function App() {
             className="fixed top-6 left-6 z-20 w-12 h-12 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-400"
             aria-label="Go back to home"
           >
-            
-            
+
+
             <svg xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 25 25"
               width="30"
@@ -306,7 +301,7 @@ function App() {
               fill="none"
               stroke="black"
               strokeWidth="2"
-              >
+            >
               <path d="M32 15H3.41l8.29-8.29-1.41-1.42-10 10a1 1 0 0 0 0 1.41l10 10 1.41-1.41L3.41 17H32z" data-name="4-Arrow Left" />
             </svg>
           </button>
