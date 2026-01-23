@@ -56,12 +56,12 @@ function App() {
   const getBackgroundColor = (artistName) => {
     const femaleKeywords = ['lady', 'girl', 'queen', 'woman', 'female', 'ariana', 'taylor', 'billie', 'beyonce', 'rihanna', 'adele', 'sia', 'dua', 'selena', 'miley', 'katy', 'pink', 'madonna', 'cher', 'mariah', 'whitney', 'celine', 'shakira', 'britney', 'nicki', 'cardi', 'megan', 'lizzo', 'halsey', 'lana', 'camila', 'olivia'];
     const maleKeywords = ['boy', 'man', 'king', 'mr', 'sir', 'drake', 'weeknd', 'bruno', 'ed', 'shawn', 'justin', 'kanye', 'jay', 'eminem', 'kendrick', 'post', 'travis', 'bad bunny', 'harry', 'zayn', 'lil', 'juice', 'tyler', 'frank', 'childish', 'pharrell', 'usher', 'chris', 'jason', 'john', 'adam', 'charlie', 'sam smith'];
-    
+
     const lowerArtist = artistName.toLowerCase();
-    
+
     const isFemale = femaleKeywords.some(keyword => lowerArtist.includes(keyword));
     const isMale = maleKeywords.some(keyword => lowerArtist.includes(keyword));
-    
+
     if (isFemale) {
       const femaleColors = ['#ff6b9d', '#c44569', '#f39c12', '#e74c3c', '#9b59b6'];
       return femaleColors[Math.floor(Math.random() * femaleColors.length)];
@@ -79,17 +79,17 @@ function App() {
       setError("Please enter an artist or album name to search.");
       return;
     }
-    
+
     if (!accessToken) {
       setError("Unable to connect to Spotify. Try to refresh the page.");
       return;
     }
-    
+
     setIsLoading(true);
     setHasSearched(true);
     setError("");
     setAlbums([]);
-    
+
     let artistParams = {
       method: "GET",
       headers: {
@@ -113,10 +113,10 @@ function App() {
 
       const artistID = artistData.artists.items[0].id;
       const artistName = artistData.artists.items[0].name;
-      
+
       setBackgroundColor(getBackgroundColor(artistName));
-      
-     // Get Album
+
+      // Get Album
       const albumData = await fetch(
         "https://api.spotify.com/v1/artists/" +
         artistID +
@@ -129,8 +129,8 @@ function App() {
       } else {
         setAlbums(albumData.items);
       }
-        }
-      
+    }
+
     catch (error) {
       console.error("Error fetching data:", error);
       setError("Something went wrong while searching. Please try again.");
@@ -139,31 +139,31 @@ function App() {
     }
   }
 
-const handleGoBack = () => {
-  setHasSearched(false);
-  setAlbums([]);
-  setSearchInput("");
-  setError("");
-  setBackgroundColor("#121212");
-};
-  
+  const handleGoBack = () => {
+    setHasSearched(false);
+    setAlbums([]);
+    setSearchInput("");
+    setError("");
+    setBackgroundColor("#121212");
+  };
+
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen" style={{ background: "url('/doodle-background.svg') repeat, #0a0a0a" }}>
       {!hasSearched ? (
         // SEARCH PAGE
         <div className="min-h-screen flex items-center justify-center px-4 py-12">
-          <div className="relative max-w-3xl w-full">
-            {/* Gradient background */}
-            <div 
-              className="absolute -inset-10 rounded-3xl opacity-20 blur-3xl"
-              style={{
-                background: `linear-gradient(135deg, ${backgroundColor}, #121212)`
-              }}
-              aria-hidden="true"
+          <div className="relative max-w-3xl w-full rounded-lg overflow-hidden shadow-2xl h-72 sm:h-80 md:h-96">
+            <img
+              src="/new.png"
+              alt="Hero gradient background"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ objectPosition: 'center' }}
             />
-            
+            {/* Overlay for readability */}
+            <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm" />
+
             {/* Content */}
-            <div className="relative z-10 text-center">
+            <div className="relative z-10 text-center p-8 sm:p-12">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-5"
                 style={{
                   fontFamily: "'Instrument Serif', serif",
@@ -219,7 +219,7 @@ const handleGoBack = () => {
                   disabled={isLoading || authError}
                   aria-label="Search for an artist or album"
                 />
-                <button 
+                <button
                   onClick={search}
                   disabled={isLoading || authError}
                   className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-black font-semibold px-8 py-3 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -285,25 +285,29 @@ const handleGoBack = () => {
         </div>
       ) : (
         // RESULTS PAGE
-        <div className="min-h-screen pt-20 pb-12">
+        <div 
+          className="min-h-screen pt-20 pb-12 transition-all duration-700"
+          style={{
+            background: `linear-gradient(to bottom, ${backgroundColor}50 0%, #12121233 100%)`
+          }}
+        >
           {/* Back Button */}
           <button
             onClick={handleGoBack}
             className="fixed top-6 left-6 z-20 w-12 h-12 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-400"
             aria-label="Go back to home"
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="black" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            
+            
+            <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 25 25"
+              width="30"
+              height="30"
+              fill="none"
+              stroke="black"
+              strokeWidth="2"
+              >
+              <path d="M32 15H3.41l8.29-8.29-1.41-1.42-10 10a1 1 0 0 0 0 1.41l10 10 1.41-1.41L3.41 17H32z" data-name="4-Arrow Left" />
             </svg>
           </button>
 
@@ -324,7 +328,7 @@ const handleGoBack = () => {
                 disabled={isLoading || authError}
                 aria-label="Search for an artist or album"
               />
-              <button 
+              <button
                 onClick={search}
                 disabled={isLoading || authError}
                 className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-black font-semibold px-8 py-3 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -336,11 +340,8 @@ const handleGoBack = () => {
           </div>
 
           {/* Results Container */}
-          <div 
-            className="transition-all duration-700 container mx-auto px-4 sm:px-6 lg:px-8 py-8"
-            style={{
-              background: `linear-gradient(to bottom, ${backgroundColor}30 0%, #121212 100%)`
-            }}
+          <div
+            className="container mx-auto sm:px-6 lg:px-8 py-8 space-y-8"
           >
             {/* Error Message */}
             {error && (
@@ -428,7 +429,7 @@ const handleGoBack = () => {
                       className="w-full h-full object-cover"
                       loading={index < 6 ? "eager" : "lazy"}
                     />
-                    
+
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-80 transition-all duration-300 flex flex-col items-center justify-center p-3 sm:p-4 opacity-0 group-hover:opacity-100">
                       <h3 className="text-white font-semibold text-center mb-1 sm:mb-2 text-sm sm:text-base line-clamp-2">
