@@ -159,8 +159,8 @@ function App() {
               className="absolute inset-0"
               style={{
                 background: `
-        radial-gradient(circle at center, transparent 0%, rgba(29, 185, 84, 0.4) 100%),
-        radial-gradient(circle at center, #121212 0%, #000 100%)
+        radial-gradient(circle at center, transparent 0%, rgba(29, 185, 84, 0.52) 100%),
+        radial-gradient(circle at center, #030303 0%, #000 100%)
       `
               }}
             />
@@ -200,15 +200,15 @@ function App() {
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-12">
-                Search for any artist and explore their complete discography powered by Spotify
+              <p className="text-base sm:text-lg text-green-100 max-w-2xl mx-auto mb-8 sm:mb-12">
+                Search for any artist and explore their albums powered by Spotify
               </p>
 
               <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-12">
                 <input
                   type="text"
                   placeholder="Search For an Artist or Album"
-                  className="w-full sm:w-96 h-12 px-5 rounded-full text-white bg-white/10 border border-white/20 backdrop-blur-md outline-none focus:ring-2 focus:ring-green-500 transition-all placeholder:text-gray-500"
+                  className="w-full sm:w-96 h-12 px-5 rounded-full text-white bg-white/10 border border-white/20 backdrop-blur-md outline-none focus:ring-2 focus:ring-green-500 transition-all placeholder:text-gray-300"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && search()}
