@@ -154,7 +154,7 @@ function App() {
         <div className="min-h-screen flex items-center justify-center px-4 py-12">
           <div className="relative max-w-3xl w-full rounded-lg overflow-hidden shadow-2xl h-72 sm:h-80 md:h-96 bg-[#121212] flex items-center justify-center">
 
-            {/* 1. Base Gradient Layer (Green edges, Black center) */}
+            {/* 1. Base Gradient Layer*/}
             <div
               className="absolute inset-0"
               style={{
@@ -169,7 +169,7 @@ function App() {
             <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen">
               <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                 <filter id="spotifyNoise">
-                  {/* High frequency creates the 'sandpaper' grain look */}
+                  
                   <feTurbulence
                     type="fractalNoise"
                     baseFrequency="0.80"
